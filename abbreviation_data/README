@@ -1,0 +1,14 @@
+This project incorporates the `abbreviations.json` file from
+https://github.com/Julian/lean.nvim/vscode-lean/abbreviations.json
+as downloaded on 28th of June, 2025. It is stored as
+'abbreviations_original.json'. The file is licensed under the Apache License,
+Version 2.0. As requested by the license a copy of the license is also directly
+available. It is stored in 'APACHE_LICENSE_COPY'.
+
+The Apache License demands in part 4. Redistribution, section (b) "You must
+cause any modified files to carry prominent notices stating that You changed
+the files;". Well, since JSON doesn't support comments, I've decide to keep the
+original file as abbreviations_original.json, and each and all changes I've
+made are with the working copy of abbreviations_original.json, i.e.
+abbreviations.json.
+
