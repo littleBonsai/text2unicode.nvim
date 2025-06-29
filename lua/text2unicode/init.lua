@@ -1,4 +1,4 @@
-local text2unicode
+local text2unicode = {}
 
 function text2unicode.setup(opts) end
 
