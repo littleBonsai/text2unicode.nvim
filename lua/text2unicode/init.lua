@@ -96,6 +96,34 @@ function text2unicode.convert_current_line()
 	vim.api.nvim_set_current_line(new_text)
 end
 
+function text2unicode.reverse_lookup_character()
+	local column = vim.api.nvim_win_get_cursor(0)[2] + 1
+	local text = vim.api.nvim_get_current_line():sub(column)
+
+	local endpos = vim.str_utf_end(text, 1) + 1
+	local character = text:sub(1, endpos)
+	local number = vim.fn.char2nr(character)
+	local char_number = "'" .. character .. "' (U+" .. string.format("%04X", number) .. ")"
+
+	local codes = from_unicode_map[character]
+
+	local result
+	if codes then
+		result = "text2unicode: To get " .. char_number .. " use:"
+		for i, code in ipairs(codes) do
+			if i == 1 then
+				result = result .. " " .. opts.leader .. code
+			else
+				result = result .. ", " .. opts.leader .. code
+			end
+		end
+	else
+		result = "text2unicode: no mapping for " .. char_number .. " available."
+	end
+
+	vim.print(result)
+end
+
 function text2unicode.setup(opts_arg)
 	opts = opts_arg or {}
 	opts.DEBUG = opts.DEBUG or false
@@ -110,6 +138,12 @@ function text2unicode.setup(opts_arg)
 		text2unicode.convert_current_line()
 	end, {
 		desc = "text2unicode: Transform abbreviations in current line",
+	})
+
+	vim.keymap.set("n", "<M-l>", function()
+		text2unicode.reverse_lookup_character()
+	end, {
+		desc = "text2unicode: Reverse lookup the character under the cursor",
 	})
 
 	load_transformation_table()
